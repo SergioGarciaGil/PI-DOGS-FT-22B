@@ -20,16 +20,21 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     weight: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    yearsOfLife: {
+
+    lifeSpan: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    temperament: {
-      type: DataTypes.STRING,
+
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
     },
   });
 };
