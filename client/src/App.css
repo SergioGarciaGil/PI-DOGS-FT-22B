@@ -1,7 +1,16 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
+body{
+  /* background-image: url('./components/imgs/background.jpg');
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; */
+  background-color: rgb(42, 40, 51);
+}
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +45,4 @@
     transform: rotate(360deg);
   }
 }
+ */
