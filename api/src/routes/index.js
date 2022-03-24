@@ -21,8 +21,8 @@ const getApiInfo = async () => {
       name: e.name,
       weight_min: e.weight.metric.split("-")[0],
       width_max: e.weight.metric.split("-")[1],
-      heightMin: e.height.metric.split("-")[0],
-      heightMax: e.height.metric.split("-")[1],
+      height_min: e.height.metric.split("-")[0],
+      height_max: e.height.metric.split("-")[1],
       life_span: e.life_span,
       temperament: e.temperament,
       image: e.image.url,
@@ -62,11 +62,19 @@ router.get("/dogs", async (req, res) => {
   } else {
     res.status(200).send(dogsTotal);
   }
+
+  // let temperamentDB = await Temperament.findAll({
+  //     where: {name: temperaments } //le pido que busque las que coincidan con el temperament que llega por body
+  // });
+  //   dogCreate.addTemperament(temperamentDb);
+  //   res.status(200).send("Dog creado con Exito");
+  // });
+
   router.get("/temperaments", async (req, res) => {
     const temperamentApi = await axios.get(
       `https://api.thedogapi.com/v1/breeds?${API_KEY}`
     );
-    let temperaments = temperamentApi.data.map((e) => e.temperament); //mapiamos temperament de la api
+    let temperaments = temperamentApi.data.map((e) => e.temperament).toString(); //mapiamos temperament de la api
     temperaments = await temperaments.split(","); //separo los string por una coma
     const temperamentSpace = await temperaments.map((e) => e.trim()); // elimino los espacios del comienzo y final
     const temperamentNoRepeat = [...new Set(temperamentSpace)]; //con el constructor set creo un objeto donde guardo los valores
@@ -87,4 +95,60 @@ router.get("/dogs", async (req, res) => {
     res.status(200).send(allTemperaments);
   });
 });
+// router.post("/", async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       height_min,
+//       height_max,
+//       weight_max,
+//       weight_min,
+//       lifeSpan,
+//       createdInDb,
+//       temperament,
+//     } = req.body;
+//     if (!name) return res.status(404).send("The name,is required");
+//     const createdDog = await Dog.create({
+//       name,
+//       height_min,
+//       height_max,
+//       weight_min,
+//       weight_max,
+
+//       lifeSpan,
+//       createdInDb,
+//       /* temperament, */
+//       /* createdInDb, */
+//     });
+
+//     await createdDog.setTemperaments(temperament);
+//     return res.status(200).send("The dog has been successfully created");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(404).json(err);
+//   }
+// });
+
+router.post("/", async (req, res) => {
+  try {
+    const { name, height, weight, lifeSpan, createdInDb, temperament } =
+      req.body;
+    if (!name || !height || !weight)
+      return res.status(404).send("The name, height and weight are required");
+    const createdDog = await Dog.create({
+      name,
+      height,
+      weight,
+      lifeSpan,
+      /* temperament, */
+      /* createdInDb, */
+    });
+    await createdDog.setTemperaments(temperament);
+    return res.status(200).send("The dog has been successfully created");
+  } catch (err) {
+    console.log(err);
+    res.status(404).json(err);
+  }
+});
+
 module.exports = router;
