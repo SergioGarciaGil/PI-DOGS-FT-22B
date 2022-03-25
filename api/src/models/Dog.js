@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    lifeSpan: {
+    life_span: {
       type: DataTypes.STRING,
       allowNull: true,
     },
