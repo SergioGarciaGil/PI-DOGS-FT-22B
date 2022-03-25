@@ -70,26 +70,14 @@ router.get("/dogs", async (req, res) => {
   //   res.status(200).send("Dog creado con Exito");
   // });
 
-  router.get("/temperament", async (req, res) => {
-    const temperamentsApi = await axios.get(
+  router.get("/temperaments", async (req, res) => {
+    const temperamentApi = await axios.get(
       `https://api.thedogapi.com/v1/breeds?${API_KEY}`
     );
-    let temperaments = temperamentsApi.data
-      .map((e) => e.temperament)
-      .toString();
-    // mapiamos temperament de la api
+    let temperaments = temperamentApi.data.map((e) => e.temperament).toString(); //mapiamos temperament de la api
     temperaments = await temperaments.split(","); //separo los string por una coma
     const temperamentSpace = await temperaments.map((e) => e.trim()); // elimino los espacios del comienzo y final
     const temperamentNoRepeat = [...new Set(temperamentSpace)]; //con el constructor set creo un objeto donde guardo los valores
-    // const tempEach = temperaments.map((e) => {
-    //   for (let i = 0; i < e.length; i++) return e[i];
-    // });
-
-    // tempEach.forEach((e) => {
-    //   Temperament.findOrCreate({
-    //     where: { name: e },
-    //   });
-    // });
 
     temperamentNoRepeat.forEach(async (e) => {
       //recorre cada elemento y hace un findOrCreate
@@ -102,7 +90,7 @@ router.get("/dogs", async (req, res) => {
         });
       }
     });
-    console.log(temperamentNoRepeat);
+
     const allTemperaments = await Temperament.findAll();
     res.status(200).send(allTemperaments);
   });
@@ -141,49 +129,26 @@ router.get("/dogs", async (req, res) => {
 //   }
 // });
 
-router.post("/dog", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { name, height, weight, life_span, createdInDb, temperament } =
+    const { name, height, weight, lifeSpan, createdInDb, temperament } =
       req.body;
-    if (!name || !height || !weight || !temperament)
-      return res
-        .status(404)
-        .send("The name, height, weight, temperament are required");
-
-    // let dogName = await dogsTotal.filter((e) =>
-    //   e.name.toLowerCase().includes(name.toLowerCase())
-    //
+    if (!name || !height || !weight)
+      return res.status(404).send("The name, height and weight are required");
     const createdDog = await Dog.create({
       name,
       height,
       weight,
-      life_span,
+      lifeSpan,
       /* temperament, */
       /* createdInDb, */
     });
-    // await createdDog.setTemperaments(temperament);
-    // return res.status(200).send("The dog has been successfully created");
-
-    let temperamentDb = await Temperament.findAll({
-      ///El temperament se la paso porel modelo que tiene todas los temperamentos
-      where: { name: temperament }, //le digo dentro de este modelo encontrar todas las ocupaciones que coincidan por body
-    });
-    createdDog.addTemperament(temperamentDb);
-
-    res.status(200).send("Personaje creado con éxito");
+    await createdDog.setTemperaments(temperament);
+    return res.status(200).send("The dog has been successfully created");
   } catch (err) {
     console.log(err);
     res.status(404).json(err);
   }
 });
-router.get("/dogs/:id", async (req, res) => {
-  const id = req.params.id;
-  const dogsTotal = await getAllDogs();
-  if (id) {
-    let dogId = await dogsTotal.filter((e) => e.id == id);
-    dogId.length // si encuntra dog res estaus 200 y si no status 404
-      ? res.status(200).json(dogId)
-      : res.status(404).json("Dog no encontrado");
-  }
-});
+
 module.exports = router;
