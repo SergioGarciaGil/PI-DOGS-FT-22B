@@ -1,12 +1,16 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-import "./App.css";
+import LandingPage from "./components/LandingPage";
+import Home from "./components/Home";
+// import DogCard from "./components/DogCard";
 
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <h1>App the Breeds</h1>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={LandingPage} />;
+          <Route path="/home" component={Home} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
