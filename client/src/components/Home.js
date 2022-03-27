@@ -1,13 +1,25 @@
 import React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDogs } from "../actions";
 import { Link } from "react-router-dom";
 import DogCard from "./DogCard";
+import Paginado from "./Paginado";
 
 export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //con use selector remplazamos mapDispatchTop..
+  const [currentPage, setCurrentPage] = useState(1); //guardamos en un estado actual la pagian local y creamos una constante que setee la pagina actual y empezamos en 1 por que siempre voy arrancar en la primer pagina
+  const [dogsPerPage, setDogsPerPage] = useState(8); //en esta const guardamos cuantos Dogs quiero por pagina
+  const indexOfLastDog = currentPage * dogsPerPage; // indice del ultimo personaje es igual pagina actual x Dogs  por pagina = 8
+  const indexOfFirstDog = indexOfLastDog - dogsPerPage; //indice del ultimo personaje menos personajes por paginas = 0
+
+  const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
+
+  const paginado = (pageNumber) => {
+    //paginado setea la pagina en el numero que vaya haciendo click
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getDogs()); //con useEfect despachamos las acciones
@@ -45,12 +57,17 @@ export default function Home() {
           <option values="create">Creados</option>
           <option value="api">Existentes</option>
         </select>
-        {allDogs.map((e) => {
+        <Paginado
+          dogsPerPage={dogsPerPage}
+          allDogs={allDogs.length}
+          paginado={paginado}
+        />
+        {currentDogs?.map((e) => {
           return (
             <>
               <div key={e.id}>
                 <Link to={"/home/" + e.id}>
-                  <DogCard name={e.name} image={e.image} key={e.id} />;
+                  <DogCard id={e.id} name={e.name} image={e.image} key={e.id} />
                 </Link>
               </div>
             </>
