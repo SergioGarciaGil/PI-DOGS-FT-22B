@@ -18,9 +18,9 @@ export default function Home() {
   // const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs);
-  const temperaments = useSelector((state) => state.temperaments);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [orden, setOrden] = useState("");
+
   const [dogsPerPage, setDogsPage] = useState(9);
   //
   /**
@@ -95,14 +95,7 @@ export default function Home() {
               return (
                 <>
                   <div key={e.id}>
-                    <Link to={"/home/" + e.id}>
-                      <DogCard
-                        id={e.id}
-                        name={e.name}
-                        image={e.img}
-                        key={e.id}
-                      />
-                    </Link>
+                  
                   </div>
                 </>
               );
@@ -113,14 +106,8 @@ export default function Home() {
           {currentDogs &&
             currentDogs.map((e) => {
               return (
-                <Link to={"/dogs/" + e.id}>
-                  <DogCard
-                    name={e.name}
-                    image={e.img ? e.img : e.image}
-                    temperament={e.temperament}
-                    temperaments={e.temperaments}
-                    id={e.id}
-                  />
+                <Link to={"/home/" + e.id}>
+                  <DogCard id={e.id} name={e.name} image={e.img} key={e.id} />
                 </Link>
               );
             })}

@@ -17,15 +17,14 @@ const getApiInfo = async () => {
 
   const apiInfo = await apiUrl.data.map((e) => {
     return {
-      id: e.id,
       name: e.name,
-      weight_min: e.weight.metric.split("-")[0],
-      width_max: e.weight.metric.split("-")[1],
-      height_min: e.height.metric.split("-")[0],
-      height_max: e.height.metric.split("-")[1],
-      life_span: e.life_span,
-      temperament: e.temperament,
-      image: e.image.url,
+      lifeSpan: e.life_span,
+      id: e.id,
+      height: e.height.metric,
+      weight: e.weight.metric,
+      temperament: [e.temperament],
+      // .map((e) => e.trim()),
+      img: e.image.url,
     };
   });
   return apiInfo;

@@ -1,10 +1,10 @@
 import React from "react";
 
 export default function Paginado({ dogsPerPage, allDogs, paginado }) {
-  const pageNumbers = [];
+  const pageNumber = [];
 
   for (let i = 1; i <= Math.ceil(allDogs / dogsPerPage); i++) {
-    pageNumbers.push(i);
+    pageNumber.push(i);
   }
   /*
 //    * Ahora si tengo 'pageNumber', mapeamos todos los números que contenga el arreglo.
@@ -13,8 +13,8 @@ export default function Paginado({ dogsPerPage, allDogs, paginado }) {
     <div>
       <nav>
         <ul>
-          {pageNumbers &&
-            pageNumbers.map((number) => (
+          {pageNumber &&
+            pageNumber.map((number) => (
               <li key={number}>
                 <a onClick={() => paginado(number)}>{number}</a>
               </li>
