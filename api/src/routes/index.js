@@ -22,7 +22,7 @@ const getApiInfo = async () => {
       id: e.id,
       height: e.height.metric,
       weight: e.weight.metric,
-      temperament: [e.temperament],
+      temperament: e.temperament,
       // .map((e) => e.trim()),
       img: e.image.url,
     };
@@ -142,7 +142,7 @@ router.get("/dogs", async (req, res) => {
 
 router.post("/dog", async (req, res) => {
   try {
-    const { name, height, weight, life_span, createdInDb, temperament } =
+    const { name, height, weight, life_span, img, createdInDb, temperament } =
       req.body;
     if (!name || !height || !weight || !temperament)
       return res
@@ -157,6 +157,7 @@ router.post("/dog", async (req, res) => {
       height,
       weight,
       life_span,
+      img,
       /* temperament, */
       /* createdInDb, */
     });

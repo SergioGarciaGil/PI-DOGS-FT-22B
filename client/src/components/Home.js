@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs } from "../actions";
+import { getDogs, filterCreated } from "../actions";
 import { Link } from "react-router-dom";
 import DogCard from "./DogCard";
 import Paginado from "./Paginado";
@@ -56,6 +56,14 @@ export default function Home() {
     dispatch(getDogs());
     setCurrentPage(1);
   }
+  // function handleFilterCreated(e) {
+  //   e.preventDefault();
+  //   dispatch(filterCreated(e.target.value));
+  // }
+  function handleFrom(e) {
+    e.preventDefault();
+    dispatch(filterCreated(e.target.value));
+  }
   return (
     <div>
       <Link to="/dog">Crear Dog</Link>
@@ -78,30 +86,23 @@ export default function Home() {
           <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
         </select>
-        <select>
-          {/* <p>My Dogs</p> */}
-          <option value="all">Todos</option>
-          <option values="create">Creados</option>
-          <option value="api">Existentes</option>
+
+        {/* <select onChange={(e) => handleFilterCreated(e)}>
+          <option value="all">All </option>
+          <option value="api">Existent </option>
+          <option value="created">Created </option>
+        </select> */}
+        <select onChange={(e) => handleFrom(e)}>
+          <option value="ALL">All</option>
+          <option value="CREATED">Created</option>
+          <option value="API">API</option>
         </select>
         <Paginado
           dogsPerPage={dogsPerPage}
           allDogs={allDogs.length}
           paginado={paginado}
         />
-        {/* <div>
-          {currentDogs &&
-            currentDogs?.map((e) => {
-              return (
-                <>
-                  <div key={e.id}>
-                  
-                  </div>
-                </>
-              );
-            })}
-        </div>
-      </div> */}
+
         <div>
           {currentDogs &&
             currentDogs.map((e) => {
