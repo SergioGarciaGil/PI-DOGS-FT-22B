@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
+import SearchBar from "./SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function Home() {
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog); //divide el array de perros para cada pag, dejando 8porpag
 
-  const [order, setOrder] = useState(""); // Estado local que me sirve para modificar el estado cuando ordeno y renderizar los perros ordenados como quiero.
+  const [, setOrder] = useState(""); // Estado local que me sirve para modificar el estado cuando ordeno y renderizar los perros ordenados como quiero.
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -153,9 +154,9 @@ export default function Home() {
               <option value="created">Created</option>
             </select>
           </li>
-          {/* <div>
+          <div>
             <SearchBar />
-          </div> */}
+          </div>
         </ul>
       </div>
 

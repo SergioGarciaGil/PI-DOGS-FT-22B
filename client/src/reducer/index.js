@@ -1,10 +1,11 @@
 import {
   GET_DOGS,
-  // GET_NAME_DOG,
+
   // GET_TEMPERAMENT,
   // FILTER_BY_TEMPERAMENTS,
   FILTER_CREATED,
   ORDER_BY_NAME,
+  GET_NAME_DOG,
   // ORDER_BY_WEIGHT,
   // GET_DETAILS,
   // CREATE_DOG,
@@ -25,6 +26,11 @@ function rootReducer(state = initialState, action) {
         filterDogs: action.payload,
       };
 
+    case GET_NAME_DOG:
+      return {
+        ...state,
+        dogs: action.payload, // simpre lo hacemos con dogs por que es el arreglo que estoy renderizando
+      };
     // case GET_NAME_DOG:
     //   return {
     //     ...state,
@@ -47,79 +53,79 @@ function rootReducer(state = initialState, action) {
     //     dogs: temperamentFilter,
     //   };
     case FILTER_CREATED:
-      // const allDogsCreated = state.filterDogs;
-      // const createdFilter =
-      //   action.payload === "created"
-      //     ? allDogsCreated.filter((e) => e.createdInDb)
-      //     : allDogsCreated.filter((e) => !e.createdInDb);
-
-      // return {
-      //   ...state,
-      //   dogs: action.payload === "all" ? allDogsCreated : createdFilter,
-      // };
-
       const allDogsCreated = state.filterDogs;
       const createdFilter =
         action.payload === "created"
           ? allDogsCreated.filter((e) => e.createdInDb)
-          : action.payload === "api"
-          ? allDogsCreated.filter((e) => !e.createdInDb)
-          : action.payload === "all" && allDogsCreated;
+          : allDogsCreated.filter((e) => !e.createdInDb);
+
       return {
         ...state,
-        dogs: createdFilter,
+        dogs: action.payload === "all" ? allDogsCreated : createdFilter,
       };
+
+    // const allDogsCreated = state.filterDogs;
+    // const createdFilter =
+    //   action.payload === "created"
+    //     ? state.allDogsCreated.filter((e) => e.createdInDb)
+    //     : action.payload === "api"
+    //     ? state.allDogsCreated.filter((e) => !e.createdInDb)
+    //     : action.payload === "all" && state.allDogsCreated;
+    // return {
+    //   ...state,
+    //   dogs: createdFilter,
+    // };
+    // case ORDER_BY_NAME:
+    // let order =
+    //   action.payload === "asc"
+    //     ? state.dogs.sort(function (a, b) {
+    //         if (a.name > b.name) {
+    //           //compara y ordena posicion de derecha o izquierda
+    //           return 1;
+    //         }
+    //         if (b.name > a.name) {
+    //           //compara y ordena de menor
+    //           return -1;
+    //         }
+    //         return 0; // si son iguales lo deja como esta
+    //       })
+    //     : // aqui si es descendente aplicamos?
+    //       state.dogs.sort(function (a, b) {
+    //         if (a.name > b.name) {
+    //           return -1;
+    //         }
+    //         if (b.name > a.name) {
+    //           return 1;
+    //         }
+    //       });
+    // return {
+    //   dogs: order,
+    // };
     case ORDER_BY_NAME:
       let order =
         action.payload === "asc"
           ? state.dogs.sort(function (a, b) {
               if (a.name > b.name) {
-                //compara y ordena posicion de derecha o izquierda
                 return 1;
               }
               if (b.name > a.name) {
-                //compara y ordena de menor
                 return -1;
               }
-              return 0; // si son iguales lo deja como esta
+              return 0;
             })
-          : // aqui si es descendente aplicamos?
-            state.dogs.sort(function (a, b) {
+          : state.dogs.sort(function (a, b) {
               if (a.name > b.name) {
                 return -1;
               }
               if (b.name > a.name) {
                 return 1;
               }
+              return 0;
             });
       return {
+        ...state,
         dogs: order,
       };
-    // case ORDER_BY_NAME:
-    //   let order =
-    //     action.payload === "asc"
-    //       ? state.dogs.sort(function (a, b) {
-    //           if (a.name > b.name) {
-    //             return 1;
-    //           }
-    //           if (b.name > a.name) {
-    //             return -1;
-    //           }
-    //           return 0;
-    //         })
-    //       : state.dogs.sort(function (a, b) {
-    //           if (a.name > b.name) {
-    //             return -1;
-    //           }
-    //           if (b.name > a.name) {
-    //             return 1;
-    //           }
-    //           return 0;
-    //         });
-    //   return {
-    //     ...state,
-    //     dogs: order,
-    //   };
     // case ORDER_BY_WEIGHT:
     //   let sortArrayW =
     //     action.payload === "desc"

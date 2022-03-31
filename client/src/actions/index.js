@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DOGS, FILTER_CREATED, ORDER_BY_NAME } from "./types";
+import { GET_DOGS, FILTER_CREATED, ORDER_BY_NAME, GET_NAME_DOG } from "./types";
 
 export function getAll() {
   return async function (dispatch) {
@@ -12,6 +12,20 @@ export function getAll() {
   };
 }
 
+export function getNameDog(name) {
+  //se puede usar payload o name cualquier nombre
+  return async function (dispatch) {
+    try {
+      var json = await axios.get("http://localhost:3001/dogs?name=" + name);
+      return dispatch({
+        type: GET_NAME_DOG,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 // export function getNameDog(payload) {
 //   return async function (dispatch) {
 //     var json = await axios(`http://localhost:3001/dogs?name=${payload}`);
@@ -52,12 +66,7 @@ export function orderByName(payload) {
     payload,
   };
 }
-// export function orderByName(payload) {
-//   return {
-//     type: ORDER_BY_NAME,
-//     payload,
-//   };
-// }
+
 // export function orderByWeight(payload) {
 //   return {
 //     type: ORDER_BY_WEIGHT,
