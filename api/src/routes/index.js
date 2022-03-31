@@ -17,14 +17,15 @@ const getApiInfo = async () => {
 
   const apiInfo = await apiUrl.data.map((e) => {
     return {
-      name: e.name,
-      lifeSpan: e.life_span,
       id: e.id,
-      height: e.height.metric,
-      weight: e.weight.metric,
+      name: e.name,
+      heightMin: e.height.metric.split("-")[0],
+      heightMax: e.height.metric.split("-")[1],
+      weightMin: e.weight.metric.split("-")[0],
+      weightMax: e.weight.metric.split("-")[1],
+      life_span: e.life_span,
       temperament: e.temperament,
-      // .map((e) => e.trim()),
-      img: e.image.url,
+      image: e.image.url,
     };
   });
   return apiInfo;
@@ -142,22 +143,32 @@ router.get("/dogs", async (req, res) => {
 
 router.post("/dog", async (req, res) => {
   try {
-    const { name, height, weight, life_span, img, createdInDb, temperament } =
-      req.body;
-    if (!name || !height || !weight || !temperament)
-      return res
-        .status(404)
-        .send("The name, height, weight, temperament are required");
+    const {
+      name,
+      heightMin,
+      heightMax,
+      weightMin,
+      weightMax,
+      life_span,
+      image,
+      createdInDb,
+      temperament,
+    } = req.body;
+    if (!name || !heightMin || !heightMax || !heightMax || !weightMax)
+      return res.status(404).send("The name, height, weight,  are required");
 
     // let dogName = await dogsTotal.filter((e) =>
     //   e.name.toLowerCase().includes(name.toLowerCase())
     //
     const createdDog = await Dog.create({
       name,
-      height,
-      weight,
+      heightMin,
+      heightMax,
+      weightMin,
+      weightMax,
       life_span,
-      img,
+      image,
+      createdInDb,
       /* temperament, */
       /* createdInDb, */
     });
