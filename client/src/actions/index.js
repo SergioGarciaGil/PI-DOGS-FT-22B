@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_DOGS, FILTER_CREATED, ORDER_BY_NAME, GET_NAME_DOG } from "./types";
+import {
+  GET_DOGS,
+  FILTER_CREATED,
+  ORDER_BY_NAME,
+  GET_NAME_DOG,
+  GET_TEMPERAMENT,
+} from "./types";
 
 export function getAll() {
   return async function (dispatch) {
@@ -35,7 +41,15 @@ export function getNameDog(name) {
 //     });
 //   };
 // }
-
+export function getTemperaments() {
+  return async function (dispatch) {
+    var json = await axios.get("http://localhost:3001/temperament");
+    return dispatch({
+      type: GET_TEMPERAMENT,
+      payload: json.data,
+    });
+  };
+}
 // export function getTemperaments() {
 //   return async function (dispatch) {
 //     var json = await axios("http://localhost:3001/temperaments", {});
@@ -45,7 +59,18 @@ export function getNameDog(name) {
 //     });
 //   };
 // }
-
+export function createDog(payload) {
+  return async function (dispatch) {
+    let response = await axios.post("http://localhost:3001/dog", payload);
+    console.log(response);
+    return response;
+  };
+}
+//   return async function (dispatch) {
+//     const response = await axios.post("http://localhost:3001/dogs", payload);
+//     return response;
+//   };
+// }
 // export function filterByTemperaments(payload) {
 //   return {
 //     type: FILTER_BY_TEMPERAMENTS,
@@ -81,12 +106,5 @@ export function orderByName(payload) {
 //       type: GET_DETAILS,
 //       payload: json.data,
 //     });
-//   };
-// }
-
-// export function createDog(payload) {
-//   return async function (dispatch) {
-//     const response = await axios.post("http://localhost:3001/dogs", payload);
-//     return response;
 //   };
 // }

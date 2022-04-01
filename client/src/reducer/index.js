@@ -1,14 +1,13 @@
 import {
   GET_DOGS,
-
-  // GET_TEMPERAMENT,
+  GET_TEMPERAMENT,
   // FILTER_BY_TEMPERAMENTS,
   FILTER_CREATED,
   ORDER_BY_NAME,
   GET_NAME_DOG,
   // ORDER_BY_WEIGHT,
   // GET_DETAILS,
-  // CREATE_DOG,
+  CREATE_DOG,
 } from "../actions/types";
 
 const initialState = {
@@ -31,16 +30,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload, // simpre lo hacemos con dogs por que es el arreglo que estoy renderizando
       };
-    // case GET_NAME_DOG:
-    //   return {
-    //     ...state,
-    //     dogs: action.payload,
-    //   };
-    // case GET_TEMPERAMENT:
-    //   return {
-    //     ...state,
-    //     temperaments: action.payload,
-    //   };
+
+    case GET_TEMPERAMENT:
+      return {
+        ...state,
+        temperaments: action.payload,
+      };
     // case FILTER_BY_TEMPERAMENTS:
     //   const allDogs = state.filterDogs;
     //   const temperamentFilter =
@@ -64,17 +59,6 @@ function rootReducer(state = initialState, action) {
         dogs: action.payload === "all" ? allDogsCreated : createdFilter,
       };
 
-    // const allDogsCreated = state.filterDogs;
-    // const createdFilter =
-    //   action.payload === "created"
-    //     ? state.allDogsCreated.filter((e) => e.createdInDb)
-    //     : action.payload === "api"
-    //     ? state.allDogsCreated.filter((e) => !e.createdInDb)
-    //     : action.payload === "all" && state.allDogsCreated;
-    // return {
-    //   ...state,
-    //   dogs: createdFilter,
-    // };
     // case ORDER_BY_NAME:
     // let order =
     //   action.payload === "asc"
@@ -144,10 +128,10 @@ function rootReducer(state = initialState, action) {
     //     ...state,
     //     detail: action.payload,
     //   };
-    // case CREATE_DOG:
-    //   return {
-    //     ...state,
-    //   };
+    case CREATE_DOG:
+      return {
+        ...state,
+      };
 
     default:
       return state;

@@ -93,7 +93,7 @@ export default function Home() {
                 ALL DOGS
               </button>
 
-              <Link to="/dogs">
+              <Link to="/dog">
                 <button className="newdog">CREATE A NEW DOG</button>
               </Link>
             </li>
@@ -175,7 +175,7 @@ export default function Home() {
                 <Card
                   key={e.id}
                   name={e.name}
-                  image={e.image}
+                  image={e.img ? e.img : e.image}
                   weightMin={e.weightMin}
                   weightMax={e.weightMax}
                   heightMin={e.heightMin}
