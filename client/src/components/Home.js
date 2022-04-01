@@ -160,13 +160,6 @@ export default function Home() {
         </ul>
       </div>
 
-      {/* <h1 className="titleDog">DOGGIES</h1> */}
-      {/* 
-        <Paginado
-        dogsPerPage= {dogsPerPage}
-        allDogs= {allDogs.length}
-        paginado={paginado}/> */}
-
       <div className="container">
         {currentDogs?.map((e) => {
           return (

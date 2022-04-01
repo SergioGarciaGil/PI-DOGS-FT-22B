@@ -3,10 +3,23 @@ import { Link, useHistory } from "react-router-dom";
 import { createDog, getTemperaments } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 
+function validate(input) {
+  let errors = {};
+  if (!input.name) {
+    errors.name = "Se requiere un nombre";
+  } else if (!input.heightMin) {
+    errors.heightMin = "Se requiere una altura minima";
+  } else if (isNaN(parseInt(input.heightMin))) {
+    //   errors.heightMin = "Altura mínima requerida";
+  }
+  return errors;
+}
+
 export default function DogCreate() {
   const dispatch = useDispatch();
   const history = useHistory(); //me redirecciona despues de crear el personaje
   const allTemperaments = useSelector((state) => state.temperaments);
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
     heightMin: "",
@@ -19,13 +32,19 @@ export default function DogCreate() {
   });
   useEffect(() => {
     dispatch(getTemperaments());
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
     console.log(input);
   };
   function handleSelect(e) {
@@ -51,6 +70,12 @@ export default function DogCreate() {
     });
     history.push("/home");
   }
+  function handleDeleteTemperament(e) {
+    setInput({
+      ...input,
+      temperaments: input.temperaments.filter((temp) => temp !== e),
+    });
+  }
   return (
     <div>
       <Link to="/home">Volver</Link>
@@ -64,7 +89,9 @@ export default function DogCreate() {
             name="name"
             onChange={(e) => handleChange(e)}
           />
+          {errors.name && <p>{errors.name}</p>}
         </div>
+
         <div>
           <label>Minimum height:</label>
           <input
@@ -72,7 +99,8 @@ export default function DogCreate() {
             value={input.heightMin}
             name="heightMin"
             onChange={(e) => handleChange(e)}
-          ></input>
+          />
+          {errors.heightMin && <p>{errors.heightMin}</p>}
         </div>
         <div>
           <label>Maximum height:</label>
@@ -135,12 +163,21 @@ export default function DogCreate() {
               </option>
             ))}
         </select>
-        <ul>
-          <li>{input.temperaments.map((el) => el + ", ")}</li>
-        </ul>
 
-        <button type="submit">Crear Dog</button>
+        {input.temperaments.map((e) => {
+          return (
+            <ul key={e}>
+              <li>
+                <p>
+                  <button>{e}</button>
+                </p>
+                <button onClick={() => handleDeleteTemperament(e)}>X</button>
+              </li>
+            </ul>
+          );
+        })}
       </form>
+      <button type="submit">Crear Dog</button>
     </div>
   );
 }

@@ -30,7 +30,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload, // simpre lo hacemos con dogs por que es el arreglo que estoy renderizando
       };
-
     case GET_TEMPERAMENT:
       return {
         ...state,
