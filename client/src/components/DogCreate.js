@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 function validate(input) {
   let errors = {};
   if (!input.name) {
-    errors.name = "Se requiere un nombre";
+    errors.name = "Your breed must have a name";
   } else if (!input.heightMin) {
-    errors.heightMin = "Se requiere una altura minima";
-  } else if (isNaN(parseInt(input.heightMin))) {
-    //   errors.heightMin = "Altura mínima requerida";
+    errors.heightMin = "Minimum height is required!!";
   }
   return errors;
 }
@@ -34,7 +32,7 @@ export default function DogCreate() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -46,7 +44,7 @@ export default function DogCreate() {
       })
     );
     console.log(input);
-  };
+  }
   function handleSelect(e) {
     setInput({
       ...input,
@@ -55,19 +53,30 @@ export default function DogCreate() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input);
-    dispatch(createDog(input));
-    alert("Dog creado");
-    setInput({
-      name: "",
-      heightMin: "",
-      heightMax: "",
-      weightMin: "",
-      weightMax: "",
-      life_span: "",
-      image: "",
-      temperaments: [],
-    });
+    if (
+      !errors.name &&
+      !errors.heightMin &&
+      !errors.heightMax &&
+      !errors.weightMin &&
+      !errors.heightMax
+    ) {
+      alert("Dog creado");
+      dispatch(createDog(input));
+
+      setInput({
+        name: "",
+        heightMin: "",
+        heightMax: "",
+        weightMin: "",
+        weightMax: "",
+        life_span: "",
+        image: "",
+        temperaments: [],
+      });
+    } else {
+      return alert("Dog no ha sido creado vuelva a intentarlo");
+    }
+
     history.push("/home");
   }
   function handleDeleteTemperament(e) {
@@ -89,7 +98,9 @@ export default function DogCreate() {
             name="name"
             onChange={(e) => handleChange(e)}
           />
-          {errors.name && <p>{errors.name}</p>}
+          <div>
+            <p> {errors.name && <p>{errors.name}</p>}</p>
+          </div>
         </div>
 
         <div>
@@ -100,7 +111,6 @@ export default function DogCreate() {
             name="heightMin"
             onChange={(e) => handleChange(e)}
           />
-          {errors.heightMin && <p>{errors.heightMin}</p>}
         </div>
         <div>
           <label>Maximum height:</label>
@@ -164,20 +174,14 @@ export default function DogCreate() {
             ))}
         </select>
 
-        {input.temperaments.map((e) => {
-          return (
-            <ul key={e}>
-              <li>
-                <p>
-                  <button>{e}</button>
-                </p>
-                <button onClick={() => handleDeleteTemperament(e)}>X</button>
-              </li>
-            </ul>
-          );
-        })}
+        <button type="submit">Crear Dog</button>
       </form>
-      <button type="submit">Crear Dog</button>
+      {input.temperaments.map((e) => (
+        <div key={e} >
+          <p>{e}</p>
+          <button onClick={() => handleDeleteTemperament(e)}>X</button>
+        </div>
+      ))}
     </div>
   );
 }

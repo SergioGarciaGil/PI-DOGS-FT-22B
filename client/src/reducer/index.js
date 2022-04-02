@@ -6,7 +6,7 @@ import {
   ORDER_BY_NAME,
   GET_NAME_DOG,
   // ORDER_BY_WEIGHT,
-  // GET_DETAILS,
+  GET_DETAILS,
   CREATE_DOG,
 } from "../actions/types";
 
@@ -29,6 +29,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         dogs: action.payload, // simpre lo hacemos con dogs por que es el arreglo que estoy renderizando
+      };
+    case GET_DETAILS:
+      return {
+        ...state,
+        detail: action.payload,
       };
     case GET_TEMPERAMENT:
       return {

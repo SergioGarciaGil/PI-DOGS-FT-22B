@@ -152,14 +152,11 @@ router.post("/dog", async (req, res) => {
       life_span,
       image,
       createdInDb,
-      temperament,
+      temperaments,
     } = req.body;
-    if (!name || !heightMin || !heightMax || !heightMax || !weightMax)
+    if (!name || !heightMin || !heightMax || !weightMin || !weightMax)
       return res.status(404).send("The name, height, weight,  are required");
 
-    // let dogName = await dogsTotal.filter((e) =>
-    //   e.name.toLowerCase().includes(name.toLowerCase())
-    //
     const createdDog = await Dog.create({
       name,
       heightMin,
@@ -168,7 +165,7 @@ router.post("/dog", async (req, res) => {
       weightMax,
       life_span,
       image,
-      createdInDb,
+
       /* temperament, */
       /* createdInDb, */
     });
@@ -177,7 +174,7 @@ router.post("/dog", async (req, res) => {
 
     let temperamentDb = await Temperament.findAll({
       ///El temperament se la paso porel modelo que tiene todas los temperamentos
-      where: { name: temperament }, //le digo dentro de este modelo encontrar todas las ocupaciones que coincidan por body
+      where: { name: temperaments }, //le digo dentro de este modelo encontrar todas las ocupaciones que coincidan por body
     });
     createdDog.addTemperament(temperamentDb);
 

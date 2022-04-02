@@ -6,5 +6,5 @@ export const GET_TEMPERAMENT = "GET_TEMPERAMENT";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 // export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT";
-// export const GET_DETAILS = "GET_DETAILS";
+export const GET_DETAILS = "GET_DETAILS";
 export const CREATE_DOG = "CREATE_DOG";
