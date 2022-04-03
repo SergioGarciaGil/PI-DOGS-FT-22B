@@ -3,7 +3,7 @@ import LandingPage from "./components/LandingPage";
 import Home from "./components/Home";
 import DogCreate from "./components/DogCreate";
 import Detail from "./components/Detail";
-// import DogCard from "./components/DogCard";
+import "./App.css";
 
 function App() {
   return (
