@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import style from "./Home.module.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ export default function Home() {
   // }
 
   return (
-    <div className="">
+    <div className={style.mainContainer}>
       <div className="">
         <ul className="">
           <div className="">
@@ -158,12 +159,17 @@ export default function Home() {
             <SearchBar />
           </div>
         </ul>
+        <Paginado
+          dogsPerPage={dogsPerPage}
+          allDogs={allDogs.length}
+          paginado={paginado}
+        />
       </div>
 
-      <div className="container">
+      <div className={style.mainCard}>
         {currentDogs?.map((e) => {
           return (
-            <div key={e.id} className="card-home">
+            <div key={e.id} className="">
               <Link to={"/dogs/" + e.id}>
                 <Card
                   key={e.id}
@@ -182,16 +188,12 @@ export default function Home() {
         })}
       </div>
 
-      <Paginado
-        dogsPerPage={dogsPerPage}
-        allDogs={allDogs.length}
-        paginado={paginado}
-      />
-
       <Link to="/">
-        <button className="welcome">
-          <span>Welcome Page</span>
-        </button>
+        <div className={style.welcome}>
+          <button>
+            <span>Welcome Page</span>
+          </button>
+        </div>
       </Link>
     </div>
   );

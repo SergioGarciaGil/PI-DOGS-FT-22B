@@ -46,3 +46,6 @@ transform: rotate(-2deg);
 
 
 }
+.linkTitle{
+    text-decoration-line: none;
+}
