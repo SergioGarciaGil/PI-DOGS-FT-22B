@@ -14,7 +14,9 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+
 import style from "./Home.module.css";
+import LinkTitle from "./Card.module.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -85,21 +87,21 @@ export default function Home() {
   // }
 
   return (
-    <div className={style.mainContainer}>
-      <div className="">
-        <ul className="">
+    <div className={style.container}>
+      <div className={style.contentSelect}>
+        <ul className={style.navbar}>
           <div className="">
             <li>
-              <button onClick={(e) => handleClick(e)} className="newdog">
+              <button onClick={(e) => handleClick(e)} className={style.allDog}>
                 ALL DOGS
               </button>
 
               <Link to="/dog">
-                <button className="newdog">CREATE A NEW DOG</button>
+                <button className={style.allDog}>CREATE A NEW DOG</button>
               </Link>
             </li>
           </div>
-          <li className="dogs">
+          <li className={style.contentSelect}>
             <select onChange={(e) => handleSort(e)}>
               <option value="Selected" hidden>
                 Sort Breed by Name
@@ -169,8 +171,8 @@ export default function Home() {
       <div className={style.mainCard}>
         {currentDogs?.map((e) => {
           return (
-            <div key={e.id} className="">
-              <Link to={"/dogs/" + e.id}>
+            <div key={e.id}>
+              <Link to={"/dogs/" + e.id} className={LinkTitle.linkTitle}>
                 <Card
                   key={e.id}
                   name={e.name}

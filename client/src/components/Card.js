@@ -10,8 +10,8 @@ export default function Card({ name, image, id }) {
         className={style.img}
         src={image}
         alt={`${name}`}
-        width="250px"
-        heigth="200px"
+        width="200px"
+        heigth="250px"
       />
     </div>
   );
