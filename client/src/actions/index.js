@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_DOGS,
   FILTER_CREATED,
+  FILTER_BY_TEMPERAMENTS,
   ORDER_BY_NAME,
   GET_NAME_DOG,
   GET_TEMPERAMENT,
@@ -72,12 +73,12 @@ export function createDog(payload) {
 //     return response;
 //   };
 // }
-// export function filterByTemperaments(payload) {
-//   return {
-//     type: FILTER_BY_TEMPERAMENTS,
-//     payload,
-//   };
-// }
+export function filterByTemperaments(payload) {
+  return {
+    type: FILTER_BY_TEMPERAMENTS,
+    payload,
+  };
+}
 
 export function filterCreated(payload) {
   return {

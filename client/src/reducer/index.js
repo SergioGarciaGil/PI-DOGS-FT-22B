@@ -1,7 +1,7 @@
 import {
   GET_DOGS,
   GET_TEMPERAMENT,
-  // FILTER_BY_TEMPERAMENTS,
+  FILTER_BY_TEMPERAMENTS,
   FILTER_CREATED,
   ORDER_BY_NAME,
   GET_NAME_DOG,
@@ -40,17 +40,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         temperaments: action.payload,
       };
-    // case FILTER_BY_TEMPERAMENTS:
-    //   const allDogs = state.filterDogs;
-    //   const temperamentFilter =
-    //     action.payload === "All"
-    //       ? allDogs
-    //       : allDogs.filter((e) => e.temperament?.includes(action.payload));
 
-    //   return {
-    //     ...state,
-    //     dogs: temperamentFilter,
-    //   };
+    case FILTER_BY_TEMPERAMENTS:
+      const allDogs = state.filterDogs;
+      const temperamentFilter =
+        action.payload === "All"
+          ? allDogs
+          : allDogs.filter((e) => e.temperament?.includes(action.payload));
+
+      return {
+        ...state,
+        dogs: temperamentFilter,
+      };
     case FILTER_CREATED:
       const allDogsCreated = state.filterDogs;
       const createdFilter =

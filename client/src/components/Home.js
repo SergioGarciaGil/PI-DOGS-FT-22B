@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAll,
-  // getTemperaments,
-  // filterByTemperaments,
+  getTemperaments,
+  filterByTemperaments,
   filterCreated,
   orderByName,
   // orderByName,
@@ -21,6 +21,7 @@ import LinkTitle from "./Card.module.css";
 export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //trae todo lo que este en la constante de dogs
+  const allTemperaments = useSelector((state) => state.temperaments);
   const [currentPage, setCurrentPage] = useState(1); //seteado el estado local, la pag actual y el estado que setee la pag
   const [dogsPerPage /*setDogsPerPage*/] = useState(8); //los perros por paginas
   const indexOfLastDog = currentPage * dogsPerPage; //Mi paginas por los dogs por pag
@@ -28,7 +29,7 @@ export default function Home() {
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog); //divide el array de perros para cada pag, dejando 8porpag
 
   const [, setOrder] = useState(""); // Estado local que me sirve para modificar el estado cuando ordeno y renderizar los perros ordenados como quiero.
-
+  const [temperament, setTemperament] = useState("All");
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   }; //para poder renderizar el paginado
@@ -36,14 +37,8 @@ export default function Home() {
   //me traigo los dogs cuando el componente se monta
   useEffect(() => {
     dispatch(getAll()); //es lo mimso que el mapdistpachtoprops
+    dispatch(getTemperaments());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getTemperaments());
-  // }, [dispatch]);
-
-  // const allTemperaments = useSelector((state) => state.temperaments);
-  //const [temperament, setTemperament] = useState("All")
 
   function handleClick(e) {
     // resetea todo, carga todo de nuevo
@@ -51,12 +46,11 @@ export default function Home() {
     dispatch(getAll());
     setCurrentPage(1);
   }
-
-  // function handleSelect(e) {
-  //   e.preventDefault();
-  //   setCurrentPage(1);
-  //   dispatch(filterByTemperaments(e.target.value)); //accedo al valor que se hace click en la web
-  // }
+  function handleFilterTemperament(e) {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByTemperaments(e.target.value)); //accedo al valor que se hace click en la web
+  }
 
   // const [, setBreeds] = useState("all");
   function handleFilterCreated(e) {
@@ -110,15 +104,7 @@ export default function Home() {
               <option value="desc">Z - A</option>
             </select>
           </li>
-          {/* <li className="content-select">
-            <select onChange={(e) => handleSort(e)}>
-              <option value="selected" hidden className="newdog">
-                Sort Breed by name{" "}
-              </option>
-              <option value="asc">A - Z</option>
-              <option value="desc">Z - A</option>
-            </select>
-          </li> */}
+
           {/* <li className="content-select">
             <select onChange={(e) => handleByWeight(e)}>
               <option value="selected" hidden>
@@ -128,15 +114,19 @@ export default function Home() {
               <option value="desc">Heavier to lighter</option>
             </select>
           </li> */}
-          {/* <li className="content-select">
-            <select onChange={(e) => handleSelect(e)}>
-              <option key={0} value="all" hidden>
+          <li className={style.contentSelect}>
+            <select onChange={(e) => handleFilterTemperament(e)}>
+              <option key={0} value="all">
                 All temperaments
               </option>
               {allTemperaments
                 ?.sort(function (a, b) {
-                  if (a.name < b.name) return -1;
-                  if (a.name > b.name) return 1;
+                  if (a.name > b.name) {
+                    return 1;
+                  }
+                  if (b.name > a.name) {
+                    return -1;
+                  }
                   return 0;
                 })
                 .map((e) => {
@@ -147,7 +137,7 @@ export default function Home() {
                   );
                 })}
             </select>
-          </li> */}
+          </li>
           <li className="content-select">
             <select onChange={(e) => handleFilterCreated(e)}>
               <option value="all" hidden>

@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    padding: 0;
+    padding-bottom: 20px;
 }
  
 .ul li{
@@ -17,7 +17,7 @@
     color: #000;
     cursor: pointer;
     margin:4px;
-    list-style-type: none
+  
 
 }
 .ul li:hover{
