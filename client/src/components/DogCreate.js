@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createDog, getTemperaments } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import style from "./DogCreate.module.css";
 
 function validate(input) {
   let errors = {};
@@ -86,13 +87,16 @@ export default function DogCreate() {
     });
   }
   return (
-    <div>
-      <Link to="/home">Volver</Link>
-      <h1>CREATE A NEW DOG</h1>
+    <div className={style.todo}>
+      <Link className={style.btnVolver} to="/home">
+        Volver
+      </Link>
+      <h1 className={style.textCreate}>CREATE A NEW DOG</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
-          <label>Name:</label>
+          <label className={style.label}>Name:</label>
           <input
+            className={style.input}
             type="text"
             value={input.name}
             name="name"
@@ -104,57 +108,63 @@ export default function DogCreate() {
         </div>
 
         <div>
-          <label>Minimum height:</label>
+          <label className={style.label}>Minimum height:</label>
           <input
             type="text"
             value={input.heightMin}
             name="heightMin"
             onChange={(e) => handleChange(e)}
+            className={style.input}
           />
         </div>
         <div>
-          <label>Maximum height:</label>
+          <label className={style.label}>Maximum height:</label>
           <input
             type="text"
             value={input.heightMax}
             name="heightMax"
             onChange={handleChange}
+            className={style.input}
           ></input>
         </div>
         <div>
-          <label>Minimum weight:</label>
+          <label className={style.label}>Minimum weight:</label>
           <input
             type="text"
             value={input.weightMin}
             name="weightMin"
             onChange={(e) => handleChange(e)}
+            className={style.input}
           ></input>
         </div>
         <div>
-          <label>Maximum weight:</label>
+          <label className={style.label}>Maximum weight:</label>
           <input
             type="text"
             value={input.weightMax}
             name="weightMax"
             onChange={(e) => handleChange(e)}
+            className={style.input}
           ></input>
         </div>
         <div>
-          <label>Time life</label>
+          <label className={style.label}>Time life</label>
           <input
             type="text"
             value={input.life_span}
             name="life_span"
             onChange={(e) => handleChange(e)}
+            className={style.input}
           ></input>
         </div>
         <div>
-          <label>Image</label>
+          <label className={style.label}>Image</label>
           <input
             type="text"
             value={input.image}
             name="image"
             onChange={(e) => handleChange(e)}
+            className={style.input}
           ></input>
         </div>
         <select onChange={(e) => handleSelect(e)}>
@@ -174,7 +184,9 @@ export default function DogCreate() {
             ))}
         </select>
 
-        <button type="submit">Crear Dog</button>
+        <button type="submit" className={style.btnCreateDog}>
+          Crear Dog
+        </button>
       </form>
       {input.temperaments.map((e) => (
         <div key={e}>

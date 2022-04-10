@@ -1,0 +1,129 @@
+.container{
+    
+    margin-top: -10px;
+   width:auto;
+   height:650px;
+   background-color: rgba(39, 231, 39, 0.594);
+}
+.cardDetail {
+    box-shadow: 1px 2px 10px rgba(83, 63, 42, 0.2);
+  
+    width: 50%;
+    height: 650px;
+    margin: 10px;
+    padding: 20px 20px;
+    border-radius: 20px;
+    transition: transform 0.1s;
+    background: rgb(243, 153, 9);
+    ;
+   
+}
+
+ 
+    
+
+.imgDetail{
+    position: relative;
+    top: 20px;
+    width: 50%;
+    height: 50%;
+    pointer-events: none;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 650px;
+    height: 320px;
+    background-color: rgb(245, 238, 233); 
+}
+.textDetail{
+    margin-top:-5px;
+    margin-bottom: 15px;
+  color: rgb(245, 238, 233);
+  width: 50%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 10PX;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.btnDetail{
+   
+    position: relative;
+    bottom: 600px;
+    color: white;
+    font-size: 20px;
+    width: 200px;
+    text-decoration: none;
+    background-color: rgba(39, 231, 39, 0.594);
+    box-shadow: 0px 0px 10px rgb(58, 57, 57);
+   border-radius: 20px;
+    padding: 10px;
+}
+.btnDetail:hover{
+    transform: scale(1.2);
+}
+.containTemperament{
+    position: relative;
+    background-color: rgb(255, 161, 46);
+    color: rgba(255, 255, 255, 0.779);
+    left: 800px;
+    bottom: 400px;
+    pointer-events: none;
+    width: 50%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.containWeight{
+    position: relative;
+    background-color: rgb(119, 248, 59);
+    color: rgba(237, 141, 23, 0.779);
+    left: 250px;
+    bottom: 215px;
+pointer-events: none;
+    width: 50%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.containHeight{
+position: relative;
+background-color: rgb(255, 161, 46);
+color: rgba(235, 225, 214, 0.779);
+left: 500px;
+bottom: 325px;
+pointer-events: none;
+width: 50%;
+box-shadow: 0px 0px 10px rgb(0, 0, 0);
+border-radius: 20px;
+padding: 10px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+.containLifeSpan{
+pointer-events: none;
+position: relative;
+background-color: rgb(255, 161, 46);
+color: rgba(255, 255, 255, 0.779);
+left: 800px;
+bottom:650px;
+
+width: 50%;
+box-shadow: 0px 0px 10px rgb(0, 0, 0);
+border-radius: 20px;
+padding: 10px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}

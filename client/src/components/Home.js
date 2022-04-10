@@ -5,10 +5,10 @@ import {
   getAll,
   getTemperaments,
   filterByTemperaments,
+  filterByRaza,
   filterCreated,
   orderByName,
-  // orderByName,
-  // orderByWeight,
+  orderByWeight,
 } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
@@ -22,14 +22,14 @@ export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //trae todo lo que este en la constante de dogs
   const allTemperaments = useSelector((state) => state.temperaments);
+  const allRazas = useSelector((state) => state.dogs);
   const [currentPage, setCurrentPage] = useState(1); //seteado el estado local, la pag actual y el estado que setee la pag
   const [dogsPerPage /*setDogsPerPage*/] = useState(8); //los perros por paginas
   const indexOfLastDog = currentPage * dogsPerPage; //Mi paginas por los dogs por pag
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog); //divide el array de perros para cada pag, dejando 8porpag
 
-  const [, setOrder] = useState(""); // Estado local que me sirve para modificar el estado cuando ordeno y renderizar los perros ordenados como quiero.
-  const [temperament, setTemperament] = useState("All");
+  // const [temperament, setTemperament] = useState("All");
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   }; //para poder renderizar el paginado
@@ -52,33 +52,35 @@ export default function Home() {
     dispatch(filterByTemperaments(e.target.value)); //accedo al valor que se hace click en la web
   }
 
-  // const [, setBreeds] = useState("all");
+  //
   function handleFilterCreated(e) {
     e.preventDefault();
     dispatch(filterCreated(e.target.value));
     // setBreeds(e.target.value);
     setCurrentPage(1);
   }
+
+  const [, setOrder] = useState(""); // Estado local que me sirve para modificar el estado cuando ordeno y renderizar los perros ordenados como quiero.
   function handleSort(e) {
     e.preventDefault();
     dispatch(orderByName(e.target.value));
     setCurrentPage(1); //seteamos en la primer pagina
     setOrder(`Ordenado ${e.target.value}`);
   }
-  // function handleSort(e) {
-  //   e.preventDefault();
-  //   dispatch(orderByName(e.target.value));
-  //   setCurrentPage(1);
-  //   setOrder(`Ordenado ${e.target.value}`); //modifica el estado para que haga el ordenamiento
-  // }
 
-  // const [, setOrderWeight] = useState("");
-  // function handleByWeight(e) {
-  //   e.preventDefault();
-  //   dispatch(orderByWeight(e.target.value));
-  //   setCurrentPage(1);
-  //   setOrderWeight(`Ordernado ${e.target.value}`);
-  // }
+  const [, setOrderWeight] = useState("");
+  function handleByWeight(e) {
+    e.preventDefault();
+    dispatch(orderByWeight(e.target.value));
+    setCurrentPage(1);
+    setOrderWeight(`Ordernado ${e.target.value}`);
+  }
+
+  function handleFilterByRaza(e) {
+    e.preventDefault();
+    dispatch(filterByRaza(e.target.value));
+    setCurrentPage(1);
+  }
 
   return (
     <div className={style.container}>
@@ -89,15 +91,11 @@ export default function Home() {
               <button onClick={(e) => handleClick(e)} className={style.allDog}>
                 ALL DOGS
               </button>
-
-              <Link to="/dog">
-                <button className={style.allDog}>CREATE A NEW DOG</button>
-              </Link>
             </li>
           </div>
           <li className={style.contentSelect}>
             <select onChange={(e) => handleSort(e)}>
-              <option value="Selected" hidden>
+              <option value="" hidden>
                 Sort Breed by Name
               </option>
               <option value="asc">A - Z</option>
@@ -105,20 +103,21 @@ export default function Home() {
             </select>
           </li>
 
-          {/* <li className="content-select">
+          <li className={style.contentSelect}>
             <select onChange={(e) => handleByWeight(e)}>
-              <option value="selected" hidden>
+              <option value="" hidden>
                 Sort by weight
               </option>
               <option value="asc">Lighter to heavier</option>
               <option value="desc">Heavier to lighter</option>
             </select>
-          </li> */}
+          </li>
           <li className={style.contentSelect}>
             <select onChange={(e) => handleFilterTemperament(e)}>
-              <option key={0} value="all">
+              <option key={0} value="All">
                 All temperaments
               </option>
+
               {allTemperaments
                 ?.sort(function (a, b) {
                   if (a.name > b.name) {
@@ -138,19 +137,48 @@ export default function Home() {
                 })}
             </select>
           </li>
-          <li className="content-select">
-            <select onChange={(e) => handleFilterCreated(e)}>
-              <option value="all" hidden>
-                All breeds
+          <button onClick={(e) => handleClick(e)} className={style.btnAllRazas}>
+            AllRazas
+          </button>
+          <li className={style.contentSelect}>
+            <select onChange={(e) => handleFilterByRaza(e)}>
+              <option key={0} value="all" hidden>
+                All Razas
               </option>
+
+              {allRazas
+                ?.sort(function (a, b) {
+                  if (a.name > b.name) {
+                    return 1;
+                  }
+                  if (b.name > a.name) {
+                    return -1;
+                  }
+                  return 5;
+                })
+                .map((e) => {
+                  return (
+                    <option key={e.id} value={e.name}>
+                      {e.name}
+                    </option>
+                  );
+                })}
+            </select>
+          </li>
+
+          <li className={style.contentSelect}>
+            <select onChange={(e) => handleFilterCreated(e)}>
               <option value="api">Existent</option>
               <option value="created">Created</option>
             </select>
           </li>
           <div>
-            <SearchBar />
+            <Link to="/dog">
+              <button className={style.allDog}>CREATE A NEW DOG</button>
+            </Link>
           </div>
         </ul>
+        <SearchBar />
         <Paginado
           dogsPerPage={dogsPerPage}
           allDogs={allDogs.length}

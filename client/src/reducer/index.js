@@ -2,16 +2,19 @@ import {
   GET_DOGS,
   GET_TEMPERAMENT,
   FILTER_BY_TEMPERAMENTS,
+  // FILTER_BY_BREEDS,
+  FILTER_BY_RAZA,
   FILTER_CREATED,
   ORDER_BY_NAME,
   GET_NAME_DOG,
-  // ORDER_BY_WEIGHT,
+  ORDER_BY_WEIGHT,
   GET_DETAILS,
   CREATE_DOG,
 } from "../actions/types";
 
 const initialState = {
   dogs: [],
+  allDogs: [],
   temperaments: [],
   detail: [],
   filterDogs: [],
@@ -40,6 +43,28 @@ function rootReducer(state = initialState, action) {
         ...state,
         temperaments: action.payload,
       };
+    case FILTER_BY_RAZA:
+      const allRazaDogs = state.dogs;
+      const razasFiltered =
+        action.payload === "all"
+          ? allRazaDogs
+          : allRazaDogs.filter((e) => e.name?.includes(action.payload));
+
+      return {
+        ...state,
+        dogs: razasFiltered,
+      };
+    // case FILTER_BY_BREEDS:
+    //   const allRazaDogs = state.dogs;
+    //   const razasFiltered =
+    //     action.payload === "All"
+    //       ? allRazaDogs
+    //       : allRazaDogs.filter((e) => e.name?.includes(action.payload));
+
+    // return {
+    //   ...state,
+    //   dogs: razasFiltered,
+    // };
 
     case FILTER_BY_TEMPERAMENTS:
       const allDogs = state.filterDogs;
@@ -52,6 +77,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: temperamentFilter,
       };
+
     case FILTER_CREATED:
       const allDogsCreated = state.filterDogs;
       const createdFilter =
@@ -115,24 +141,20 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: order,
       };
-    // case ORDER_BY_WEIGHT:
-    //   let sortArrayW =
-    //     action.payload === "desc"
-    //       ? state.dogs.sort((a, b) => {
-    //           return b.weightMin - a.weightMin;
-    //         })
-    //       : state.dogs.sort((a, b) => {
-    //           return a.weightMin - b.weightMin;
-    //         });
-    //   return {
-    //     ...state,
-    //     dogs: sortArrayW,
-    //   };
-    // case GET_DETAILS:
-    //   return {
-    //     ...state,
-    //     detail: action.payload,
-    //   };
+    case ORDER_BY_WEIGHT:
+      let sortArrayW =
+        action.payload === "desc"
+          ? state.dogs.sort((a, b) => {
+              return b.weightMin - a.weightMin;
+            })
+          : state.dogs.sort((a, b) => {
+              return a.weightMin - b.weightMin;
+            });
+      return {
+        ...state,
+        dogs: sortArrayW,
+      };
+
     case CREATE_DOG:
       return {
         ...state,
