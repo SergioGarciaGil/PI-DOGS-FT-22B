@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   GET_DOGS,
-  // GET_BREEDS,
   FILTER_CREATED,
   FILTER_BY_TEMPERAMENTS,
   FILTER_BY_RAZA,

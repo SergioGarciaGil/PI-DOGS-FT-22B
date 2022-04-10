@@ -22,7 +22,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //trae todo lo que este en la constante de dogs
   const allTemperaments = useSelector((state) => state.temperaments);
-  const allRazas = useSelector((state) => state.dogs);
+  // const allRazas = useSelector((state) => state.allDogs);
   const [currentPage, setCurrentPage] = useState(1); //seteado el estado local, la pag actual y el estado que setee la pag
   const [dogsPerPage /*setDogsPerPage*/] = useState(8); //los perros por paginas
   const indexOfLastDog = currentPage * dogsPerPage; //Mi paginas por los dogs por pag
@@ -146,7 +146,7 @@ export default function Home() {
                 All Razas
               </option>
 
-              {allRazas
+              {allDogs
                 ?.sort(function (a, b) {
                   if (a.name > b.name) {
                     return 1;
