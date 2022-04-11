@@ -22,7 +22,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //trae todo lo que este en la constante de dogs
   const allTemperaments = useSelector((state) => state.temperaments);
-  // const allRazas = useSelector((state) => state.allDogs);
+  const allRazas = useSelector((state) => state.dogs);
   const [currentPage, setCurrentPage] = useState(1); //seteado el estado local, la pag actual y el estado que setee la pag
   const [dogsPerPage /*setDogsPerPage*/] = useState(8); //los perros por paginas
   const indexOfLastDog = currentPage * dogsPerPage; //Mi paginas por los dogs por pag
@@ -74,12 +74,6 @@ export default function Home() {
     dispatch(orderByWeight(e.target.value));
     setCurrentPage(1);
     setOrderWeight(`Ordernado ${e.target.value}`);
-  }
-
-  function handleFilterByRaza(e) {
-    e.preventDefault();
-    dispatch(filterByRaza(e.target.value));
-    setCurrentPage(1);
   }
 
   return (
@@ -140,31 +134,6 @@ export default function Home() {
           <button onClick={(e) => handleClick(e)} className={style.btnAllRazas}>
             AllRazas
           </button>
-          <li className={style.contentSelect}>
-            <select onChange={(e) => handleFilterByRaza(e)}>
-              <option key={0} value="all" hidden>
-                All Razas
-              </option>
-
-              {allDogs
-                ?.sort(function (a, b) {
-                  if (a.name > b.name) {
-                    return 1;
-                  }
-                  if (b.name > a.name) {
-                    return -1;
-                  }
-                  return 5;
-                })
-                .map((e) => {
-                  return (
-                    <option key={e.id} value={e.name}>
-                      {e.name}
-                    </option>
-                  );
-                })}
-            </select>
-          </li>
 
           <li className={style.contentSelect}>
             <select onChange={(e) => handleFilterCreated(e)}>

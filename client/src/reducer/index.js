@@ -2,8 +2,6 @@ import {
   GET_DOGS,
   GET_TEMPERAMENT,
   FILTER_BY_TEMPERAMENTS,
-  // FILTER_BY_BREEDS,
-  FILTER_BY_RAZA,
   FILTER_CREATED,
   ORDER_BY_NAME,
   GET_NAME_DOG,
@@ -43,17 +41,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         temperaments: action.payload,
       };
-    case FILTER_BY_RAZA:
-      const allRazaDogs = state.dogs;
-      const razasFiltered =
-        action.payload === "all"
-          ? allRazaDogs
-          : allRazaDogs.filter((e) => e.name?.includes(action.payload));
 
-      return {
-        ...state,
-        dogs: razasFiltered,
-      };
     // case FILTER_BY_BREEDS:
     //   const allRazaDogs = state.dogs;
     //   const razasFiltered =

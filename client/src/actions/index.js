@@ -99,9 +99,14 @@ export function getDetails(id) {
     }
   };
 }
-export function filterByRaza(payload) {
-  return {
-    type: FILTER_BY_RAZA,
-    payload,
-  };
-}
+
+// export function filterByRaza() {
+//   return async function (dispatch) {
+//     //aca en donde se conecta el front con el back
+//     let json = await axios.get("http://localhost:3001/dogs");
+//     return dispatch({
+//       type: FILTER_BY_RAZA,
+//       payload: json.data,
+//     });
+//   };
+// }
