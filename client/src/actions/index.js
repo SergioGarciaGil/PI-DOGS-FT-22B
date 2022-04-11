@@ -14,7 +14,7 @@ import {
 export function getAll() {
   return async function (dispatch) {
     //aca en donde se conecta el front con el back
-    let json = await axios.get("/dogs");
+    let json = await axios.get("https://pi-dogs-deploy1.herokuapp.com/dogs");
     return dispatch({
       type: GET_DOGS,
       payload: json.data,
@@ -26,7 +26,9 @@ export function getNameDog(name) {
   //se puede usar payload o name cualquier nombre
   return async function (dispatch) {
     try {
-      var json = await axios.get("/dogs?name=" + name);
+      var json = await axios.get(
+        "https://pi-dogs-deploy1.herokuapp.com/dogs?name=" + name
+      );
       return dispatch({
         type: GET_NAME_DOG,
         payload: json.data,
@@ -39,7 +41,9 @@ export function getNameDog(name) {
 
 export function getTemperaments() {
   return async function (dispatch) {
-    var json = await axios.get("/temperament");
+    var json = await axios.get(
+      "https://pi-dogs-deploy1.herokuapp.com/temperament"
+    );
     return dispatch({
       type: GET_TEMPERAMENT,
       payload: json.data,
@@ -49,7 +53,10 @@ export function getTemperaments() {
 
 export function createDog(payload) {
   return async function (dispatch) {
-    let response = await axios.post("/dog", payload);
+    let response = await axios.post(
+      "https://pi-dogs-deploy1.herokuapp.com/dog",
+      payload
+    );
     console.log(response);
     return response;
   };
@@ -89,7 +96,9 @@ export function orderByWeight(payload) {
 export function getDetails(id) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(`/dogs/${id}`);
+      let json = await axios.get(
+        `https://pi-dogs-deploy1.herokuapp.com/dogs/${id}`
+      );
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
