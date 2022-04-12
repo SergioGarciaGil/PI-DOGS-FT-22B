@@ -5,7 +5,6 @@ import {
   getAll,
   getTemperaments,
   filterByTemperaments,
-  filterByRaza,
   filterCreated,
   orderByName,
   orderByWeight,
